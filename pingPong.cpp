@@ -53,9 +53,9 @@ string kierunek;
 
 void brick(int height)
 {
-	if (points==0)
+	if (points == 0 || points == 26 || points == 78)
 	{
-		for (int i = 0; i < width; i++)
+		for (int i =2; i < width-2; i++)
 		{
 			map[i][height] = 'b';
 		}
@@ -95,6 +95,7 @@ int main()
 {
 	
 		SetConsoleTitle(TEXT("Ping Pong Game"));
+
 	height = 25;
 	width = 30;
 	fall = 0;
@@ -122,13 +123,35 @@ int main()
 		map[shotX][shotY] = 'd';  //seting shot's pos
 
 		if (HP == 0)work = false; //stoping loop if hp is 0
-		if (points == 30)runda = 2;
+
+
+		switch (points)
+		{
+		case 26:
+		{
+			runda = 2;
+			
+		}
+			break;
+		case 78:
+		{
+			runda = 3;
+		}	break;
+		}
+
 		if (runda == 1)
 		{
 			brick(4);
+
 		}
 		else if (runda == 2)
 		{
+			brick(4);
+			brick(5);
+		}
+		else if (runda == 3)
+		{
+			brick(3);
 			brick(4);
 			brick(5);
 		}
@@ -136,7 +159,7 @@ int main()
 		line();//upper line
 		
 
-		//creates bricks
+
 		cout << endl;
 		for (int i = 0; i <= height; i++) //left and right walls 
 		{
@@ -157,7 +180,7 @@ int main()
 				}
 				else if (map[j][i] == 'b') //darwing brick's positon
 				{
-					textColor(10);
+					textColor(170);
 					cout << "##";
 					textColor(255);
 				}
@@ -178,9 +201,58 @@ int main()
 		cout << points;
 		textColor(7);
 		cout << "|HP ";
-		textColor(4);
+		textColor(12);
 		cout << HP;
 		textColor(7);
+		cout << "|";
+		switch (HP)
+		{
+		case 3:
+		{
+			textColor(204);
+			cout << "#";
+			textColor(7);
+			cout << "|";
+			textColor(204);
+			cout << "#";
+			textColor(7);
+			cout << "|";
+			textColor(204);
+			cout << "#";
+			textColor(7);
+			cout << "|";
+		}break;
+		case 2:
+		{
+			textColor(204);
+			cout << "#";
+			textColor(7);
+			cout << "|";
+			textColor(204);
+			cout << "#";
+			textColor(7);
+			cout << "|";
+			textColor(119);
+			cout << "#";
+			textColor(7);
+			cout << "|";
+		}break;
+		case 1:
+		{
+			textColor(204);
+			cout << "#";
+			textColor(7);
+			cout << "|";
+			textColor(119);
+			cout << "#";
+			textColor(7);
+			cout << "|";
+			textColor(119);
+			cout << "#";
+			textColor(7);
+			cout << "|";
+		}break;
+		}
 		cout << "Runda: " << runda;
 
 	if (fall % speedShot == 0) // w celu mozliwosci kontroli predkosci pilki
@@ -329,7 +401,7 @@ int main()
 			break;
 			case 100: //moving right
 			{
-				if (playerX < (width - 1))
+				if (playerX < (width - 2))
 				{
 					map[playerX][playerY] = 'p';
 					map[playerX + 1][playerY] = 'p';
@@ -373,6 +445,7 @@ int main()
 		map[playerX - 1][playerY] = ' ';
 		map[shotX][shotY] = ' ';
 		runda = 1;
+		system("cls");
 		main();
 	}
 	system("pause");
