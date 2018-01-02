@@ -221,11 +221,11 @@ int main()
 					points++;
 					kierunek = "upRight";
 				}
-				else if ((shotY == playerY - 1 && (shotX == playerX || shotX == playerX + 1 || shotX == playerX - 1)) && kierunek == "downRight") //odbijanie od rekietki przy uderzeniu z prawej strony
+				else if (shotY == playerY - 1 && (shotX == playerX || shotX == playerX + 1 || shotX == playerX - 1) && kierunek == "downRight") //odbijanie od rekietki przy uderzeniu z prawej strony
 				{
 					kierunek = "upLeft";
 				}
-				else if ((shotY == playerY - 1 && shotX == (playerX || shotX ==  playerX + 1 || shotX ==  playerX - 1)) && kierunek == "downLeft") //odbijanie od rekietki przy uderzeniu z prawej strony
+				else if (shotY == playerY - 1 && (shotX == playerX || shotX ==  playerX + 1 || shotX ==  playerX - 1) && kierunek == "downLeft") //odbijanie od rekietki przy uderzeniu z prawej strony
 				{
 					kierunek = "upRight";
 				}
