@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <iostream>
 #include <windows.h>
 #include <time.h>
@@ -72,13 +73,14 @@ void line()
 }
 void menu()
 {
+	cout << "Sterownie: \n A - w lewo \n B - w prawo \n W - strzal" << endl;
 	cout << "Runda: " << runda << endl;
-	cout << "Podaj predkosc od 2 do 20 (10 default)" << endl;
+	cout << "Podaj predkosc od 2 do 20 (5 default)" << endl;
 	cin >> speed;
 	if (speed < 2 || speed > 20)
 	{
-		cout << "Glupi ? Predkosc ustawiona na 10" << endl;
-		speed=10;
+		cout << "Glupi ? Predkosc ustawiona na 5" << endl;
+		speed=5;
 	}
 	cout << "Podaj predkosc pilki od 1 do 3 (2 default)" << endl;
 	cin >> speedShot;
@@ -123,17 +125,19 @@ int main()
 		map[shotX][shotY] = 'd';  //seting shot's pos
 
 		if (HP == 0)work = false; //stoping loop if hp is 0
-		textColor(255);
-		line();//upper line
+		if (points == 30)runda = 2;
 		if (runda == 1)
 		{
 			brick(4);
 		}
 		else if (runda == 2)
 		{
-			brick(1);
-			brick(2);
+			brick(4);
+			brick(5);
 		}
+		textColor(255);
+		line();//upper line
+		
 
 		//creates bricks
 		cout << endl;
@@ -180,10 +184,9 @@ int main()
 		textColor(4);
 		cout << HP;
 		textColor(7);
-		cout << " Kierunek:" << kierunek;
-		cout << " pozycja X:" << shotX << "Y:" << shotY;
+		cout << "Runda: " << runda;
 
-	if (fall % speedShot == 0)
+	if (fall % speedShot == 0) // w celu mozliwosci kontroli predkosci pilki
 	{	if (isFlying)
 			{
 				if (shotY > (height-1))
@@ -195,9 +198,32 @@ int main()
 					kierunek = "upLeft";
 					HP--;
 				}
-
-
-				if (map[shotX][shotY - 1] == 'b' && kierunek == "upLeft")//odbijanie od cekiełek przy uderzeniu od dołu z lewej strony
+				
+				if (map[shotX - 1][shotY - 1] == 'b' && kierunek == "upLeft")//odbijanie od cekiełek przy uderzeniu pod katem od dołu z lewej strony
+				{
+					map[shotX - 1][shotY - 1] = ' ';
+					points++;
+					kierunek = "downRight";
+				}
+				else if (map[shotX + 1][shotY - 1] == 'b' && kierunek == "upRight") //odbijanie od cekiełek przy uderzeniu pod katem od dołu z prawej strony
+				{
+					map[shotX + 1 ][shotY - 1] = ' ';
+					points++;
+					kierunek = "downLeft";
+				}
+				else if (map[shotX - 1 ][shotY + 1] == 'b' && kierunek == "downRight") //odbijanie od cekiełek przy uderzeniu pod katem od góry  z prawej strony
+				{
+					map[shotX - 1][shotY + 1] = ' ';
+					points++;
+					kierunek = "upLeft";
+				}
+				else if (map[shotX + 1][shotY + 1] == 'b' && kierunek == "downLeft") //odbijanie od cekiełek przy uderzeniu pod katem od góry  z lewej strony
+				{
+					map[shotX + 1][shotY + 1] = ' ';
+					points++;
+					kierunek = "upRight";
+				}
+				else if (map[shotX][shotY - 1] == 'b' && kierunek == "upLeft")//odbijanie od cekiełek przy uderzeniu pod katem od dołu z lewej strony
 				{
 					map[shotX][shotY - 1] = ' ';
 					points++;
