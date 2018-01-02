@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include <iostream>
 #include <windows.h>
 #include <time.h>
@@ -95,9 +94,7 @@ void menu()
 int main()
 {
 	
-		SetConsoleTitle(TEXT("Spaceship Game"));
-		srand(time(NULL));
-
+		SetConsoleTitle(TEXT("Ping Pong Game"));
 	height = 25;
 	width = 30;
 	fall = 0;
