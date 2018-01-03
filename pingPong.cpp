@@ -52,7 +52,7 @@ string kierunek;
 
 void brick(int height, int odstep)
 {
-	if (points == 0 || points == 27 || points == 66 && odstep == 2)
+	if (points == 0 || points == 27 || points == 67 && odstep == 2)
 	{
 		for (int i = 2; i < width - 2; i++)
 		{
@@ -63,7 +63,7 @@ void brick(int height, int odstep)
 			else map[i][height] = 'b';
 		}
 	}
-	else if (points == 0 || points == 26 || points == 65)
+	else if (points == 0 || points == 26 || points == 67)
 	{
 		for (int i =2; i < width-2; i++)
 		{
@@ -156,8 +156,13 @@ int main()
 		{
 			runda = 3;
 			HP = 3;
+			isFlying = false;
+			map[shotX][shotY] = ' ';
+			shotX = playerX;
+			shotY = playerY - 1;
+			points++;
 		}	break;
-		case 125:
+		case 126:
 		{
 			runda = 4;
 		}	break;
