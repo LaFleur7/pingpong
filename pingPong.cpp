@@ -56,7 +56,7 @@ void brick(int height, int odstep)
 	{
 		for (int i = 2; i < width - 2; i++)
 		{
-			if (i % odstep == 0 )
+			if (odstep != 0 && i % odstep == 0 )
 			{
 				map[i][height] = ' ';
 			}
