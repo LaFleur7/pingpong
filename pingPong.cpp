@@ -1,6 +1,5 @@
 #include <iostream>
 #include <windows.h>
-#include <time.h>
 #include <conio.h>
 #include <string>
 #include <cstdlib>
@@ -42,7 +41,7 @@ void hidecursor() //fix for bliking
 }
 
 int width, height;
-char map[50][50]; //creates whole map
+char map[40][40]; //creates whole map
 int HP;
 int runda = 1;
 int points, playerX, playerY, enemyX, enemyY, shotX, shotY, speed, speedShot;
@@ -51,17 +50,30 @@ int fall; //var for falling
 bool isFlying; //to check if shot is flyfing
 string kierunek;
 
-void brick(int height)
+void brick(int height, int odstep)
 {
-	if (points == 0 || points == 26 || points == 78)
+	if (points == 0 || points == 26 || points == 65 && odstep == 2)
+	{
+		for (int i = 2; i < width - 2; i++)
+		{
+			if (odstep != 0 && i % odstep == 0 )
+			{
+				map[i][height] = ' ';
+			}
+			else map[i][height] = 'b';
+
+			
+		}
+
+	}
+	else if (points == 0 || points == 26 || points == 65)
 	{
 		for (int i =2; i < width-2; i++)
 		{
 			map[i][height] = 'b';
 		}
 	}
-
-
+	
 }
 void line()
 {
@@ -74,20 +86,31 @@ void menu()
 {
 	cout << "Sterownie: \n A - w lewo \n B - w prawo \n W - strzal" << endl;
 	cout << "Runda: " << runda << endl;
-	cout << "Podaj predkosc od 2 do 20 (5 default)" << endl;
+	cout << "Podaj predkosc od 1 do 10 (5 default)" << endl;
 	cin >> speed;
-	if (speed < 2 || speed > 20)
+	if (speed == 2115)
+	{
+		cout << "Uruchomiono tryb Boga" << endl;
+		Sleep(1000);
+		cout << "Od ktorej rundy chcesz zaczac ?" << endl;
+		cin >> runda;
+		cout << "Rozpoczynam od rundy: " <<runda<< endl;
+		cout << "Podaj predkosc od 1 do 10 (5 default)" << endl;
+		cin >> speed;	
+	}
+	if (speed < 1 || speed > 10)
 	{
 		cout << "Glupi ? Predkosc ustawiona na 5" << endl;
 		speed=5;
 	}
 	cout << "Podaj predkosc pilki od 1 do 3 (2 default)" << endl;
 	cin >> speedShot;
-	if (speed < 1 || speed > 3)
+	if (speedShot < 1 || speedShot > 3)
 	{
 		cout << "Glupi ? Predkosc ustawiona na 2" << endl;
 		speedShot = 2;
 	}
+	Sleep(1000);
 }
 
 
@@ -95,7 +118,6 @@ int main()
 {
 	
 		SetConsoleTitle(TEXT("Ping Pong Game"));
-
 	height = 25;
 	width = 30;
 	fall = 0;
@@ -115,7 +137,6 @@ int main()
 	string kierunek="upLeft"; //upLeft upRight downLeft downRight
 	while (work) //drawing board
 	{
-
 		gotoxy(0, 0);
 		map[playerX][playerY] = 'x';      //seting players pos
 		map[playerX + 1][playerY] = 'x';
@@ -124,41 +145,39 @@ int main()
 
 		if (HP == 0)work = false; //stoping loop if hp is 0
 
-
 		switch (points)
 		{
 		case 26:
 		{
 			runda = 2;
-			
-		}
-			break;
-		case 78:
+			HP = 3;
+		}	break;
+		case 65:
 		{
 			runda = 3;
+			HP = 3;
 		}	break;
 		}
 
 		if (runda == 1)
 		{
-			brick(4);
+			brick(5,0);
 
 		}
 		else if (runda == 2)
 		{
-			brick(4);
-			brick(5);
+			brick(4,0);
+			brick(10,2);
 		}
 		else if (runda == 3)
 		{
-			brick(3);
-			brick(4);
-			brick(5);
+			brick(3,2);
+			brick(6,0);
+			brick(9,4);
 		}
+
 		textColor(255);
 		line();//upper line
-		
-
 
 		cout << endl;
 		for (int i = 0; i <= height; i++) //left and right walls 
@@ -267,7 +286,10 @@ int main()
 					kierunek = "upLeft";
 					HP--;
 				}
-				
+#pragma region MyRegion
+
+
+
 				if (map[shotX - 1][shotY - 1] == 'b' && kierunek == "upLeft")//odbijanie od cekiełek przy uderzeniu pod katem od dołu z lewej strony
 				{
 					map[shotX - 1][shotY - 1] = ' ';
@@ -344,12 +366,10 @@ int main()
 				else if (shotY < 1 && kierunek == "upRight") //odbijanieod sufitu w lewo
 				{
 					kierunek = "downLeft";
-
 				}
 				else if (shotY < 1 && kierunek == "upLeft") //odbijanieod sufitu w prawo
 				{
 					kierunek = "downRight";
-
 				}
 				map[shotX][shotY] = 'p';
 				//instrukcje co do kierunków 
@@ -362,13 +382,11 @@ int main()
 				{
 					shotX++;
 					shotY--;
-
 				}
 				else if (kierunek == "downLeft")
 				{
 					shotX++;
 					shotY++;
-
 				}
 				else if (kierunek == "downRight")
 				{
