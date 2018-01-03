@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
@@ -52,18 +53,18 @@ string kierunek;
 
 void brick(int height, int odstep)
 {
-	if (points == 0 || points == 27 || points == 67 && odstep == 2)
+	if (points == 0 || points == 27 || points == 67 && odstep !=0)
 	{
 		for (int i = 2; i < width - 2; i++)
 		{
-			if (odstep != 0 && i % odstep == 0 )
+			if (i % odstep == 0 )
 			{
 				map[i][height] = ' ';
 			}
 			else map[i][height] = 'b';
 		}
 	}
-	else if (points == 0 || points == 26 || points == 67)
+	else if (points == 0 || points == 27 || points == 67)
 	{
 		for (int i =2; i < width-2; i++)
 		{
@@ -90,6 +91,9 @@ void menu()
 		Sleep(1000);
 		cout << "Od ktorej rundy chcesz zaczac ?" << endl;
 		cin >> runda;
+		if (runda == 2)points = 27;
+		else if (runda == 3)points = 67;
+		else if (runda == 4)points = 126;
 		cout << "Rozpoczynam od rundy: " <<runda<< endl;
 		cout << "Podaj predkosc od 1 do 10 (5 default)" << endl;
 		cin >> speed;	
