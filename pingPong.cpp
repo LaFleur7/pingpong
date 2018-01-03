@@ -46,13 +46,13 @@ int HP;
 int runda = 1;
 int points, playerX, playerY, enemyX, enemyY, shotX, shotY, speed, speedShot;
 int button; //button used to move
-int fall; //var for falling 
+int fall; //zmnienna sterujaca
 bool isFlying; //to check if shot is flyfing
 string kierunek;
 
 void brick(int height, int odstep)
 {
-	if (points == 0 || points == 26 || points == 65 && odstep == 2)
+	if (points == 0 || points == 27 || points == 66 && odstep == 2)
 	{
 		for (int i = 2; i < width - 2; i++)
 		{
@@ -61,10 +61,7 @@ void brick(int height, int odstep)
 				map[i][height] = ' ';
 			}
 			else map[i][height] = 'b';
-
-			
 		}
-
 	}
 	else if (points == 0 || points == 26 || points == 65)
 	{
@@ -73,7 +70,6 @@ void brick(int height, int odstep)
 			map[i][height] = 'b';
 		}
 	}
-	
 }
 void line()
 {
@@ -113,10 +109,8 @@ void menu()
 	Sleep(1000);
 }
 
-
 int main()
 {
-	
 		SetConsoleTitle(TEXT("Ping Pong Game"));
 	height = 25;
 	width = 30;
@@ -151,11 +145,21 @@ int main()
 		{
 			runda = 2;
 			HP = 3;
+			isFlying = false;
+			map[shotX][shotY] = ' ';
+			shotX = playerX;
+			shotY = playerY - 1;
+			points++;
+
 		}	break;
-		case 65:
+		case 66:
 		{
 			runda = 3;
 			HP = 3;
+		}	break;
+		case 125:
+		{
+			runda = 4;
 		}	break;
 		}
 
@@ -412,7 +416,6 @@ int main()
 					{
 						map[shotX][shotY] = 'p';
 						shotX = playerX;
-
 					}
 				}
 			}
@@ -444,12 +447,19 @@ int main()
 			break;
 			}
 		}
-
 		fall++;
 		Sleep(speed * 10);
 	}
 	system("cls");
 	cout << "GAME OVER" << endl;
+	if (runda == 4)
+	{
+		cout << "Wygrales!" << endl;
+	}
+	else
+	{
+		cout << "Niestety, przegrales" << endl;
+	}
 	cout << "Twoje punkty ";
 	textColor(10);
 	cout << points << endl;
