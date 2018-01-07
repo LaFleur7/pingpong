@@ -298,10 +298,6 @@ int main()
 					kierunek = "upLeft";
 					HP--;
 				}
-#pragma region MyRegion
-
-
-
 				if (map[shotX - 1][shotY - 1] == 'b' && kierunek == "upLeft")//odbijanie od cekiełek przy uderzeniu pod katem od dołu z lewej strony
 				{
 					map[shotX - 1][shotY - 1] = ' ';
